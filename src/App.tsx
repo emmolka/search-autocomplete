@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { useState } from 'react'
+import SearchPage from './pages/Search'
+import theme from './mocks/theme'
+
+const GlobalStyles = createGlobalStyle`
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: Arial;
+ }
+
+ body {
+   background-color: #202124
+ }
+`
 
 function App() {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <SearchPage />
+      </ThemeProvider>
+    </QueryClientProvider>
+  )
 }
 
-export default App;
+export default App
