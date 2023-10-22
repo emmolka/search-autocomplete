@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
-export const ResultsWrapper = styled.div`
+export const ResultsWrapper = styled.div<{ hideborder?: number }>`
   display: flex;
-  border-top: solid 1px ${({ theme }) => theme.grey};
+  border-top: solid 1px ${({ theme, hideborder }) => (hideborder ? 'transparent' : theme.grey)};
   flex-direction: column;
   margin-top: 15px;
   width: 100%;
   max-width: 584px;
+  max-height: 500px;
+  overflow-y: auto;
 `
 
 export const RequestInformation = styled.p`

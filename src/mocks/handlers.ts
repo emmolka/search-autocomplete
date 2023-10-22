@@ -22,7 +22,7 @@ export const handlers = [
     }
 
     const foundResults = [...searchResults]
-      .filter((result) => result.title.toLowerCase().includes(text.toLowerCase()))
+      .filter((result) => result.title.toLowerCase().startsWith(text.toLowerCase()))
       .map((result) => result.title)
       .slice(0, Number(limit || 10))
 
@@ -54,7 +54,7 @@ export const handlers = [
     }
 
     const foundResults = [...searchResults].filter((result) =>
-      result.title.toLowerCase().includes(text.toLowerCase()),
+      result.title.toLowerCase().startsWith(text.toLowerCase()),
     )
 
     const timeTaken = performance.now() - start

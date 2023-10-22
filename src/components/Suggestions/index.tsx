@@ -18,23 +18,21 @@ const Suggestions = ({
   onSuggestionClick,
   onSuggestionRemove,
   searchHistory,
-}: SuggestionsProps) => {
-  return (
-    <SuggestionsWrapper>
-      <SuggestionsSeparator />
-      {suggestions?.map((result, index) => (
-        <Suggestion
-          text={result}
-          key={`${result}${index}`}
-          hasBeenSearched={searchHistory.includes(result)}
-          onClick={() => onSuggestionClick(result)}
-          onRemove={(e) => onSuggestionRemove(e, result)}
-        />
-      ))}
-      {isSuggestionsError && <Suggestion text='Error occured' />}
-      {isSuggestionsLoading && <Suggestion text='Loading...' />}
-    </SuggestionsWrapper>
-  )
-}
+}: SuggestionsProps) => (
+  <SuggestionsWrapper>
+    <SuggestionsSeparator />
+    {suggestions?.map((result, index) => (
+      <Suggestion
+        text={result}
+        key={`${result}${index}`}
+        hasBeenSearched={searchHistory.includes(result)}
+        onClick={() => onSuggestionClick(result)}
+        onRemove={(e) => onSuggestionRemove(e, result)}
+      />
+    ))}
+    {isSuggestionsError && <Suggestion text='Error occured' />}
+    {isSuggestionsLoading && <Suggestion text='Loading...' />}
+  </SuggestionsWrapper>
+)
 
 export default Suggestions

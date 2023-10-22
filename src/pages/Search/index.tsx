@@ -7,20 +7,24 @@ import Results from '../../components/Results'
 import Suggestions from '../../components/Suggestions'
 
 const SearchPage = () => {
+  // input value used to retrieve suggestion results
   const [inputValue, setInputValue] = useState('')
   const [isInputFocused, setIsInputFocused] = useState(false)
+
+  // getting the search history on initial render
   const [searchHistory, setSearchHistory] = useState<string[]>(
     JSON.parse(localStorage.getItem('search-history') || '[]'),
   )
 
+  // value used to retrieve search results
   const [searchValue, setSearchValue] = useState('')
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const debouncedValue = useDebounce<string>(inputValue, 500)
 
-  const { suggestionsData, isSuggestionsError, isSuggestionsLoading } =
-    useSuggestions(debouncedValue)
+  // using debouncedValue to prevent request on every input change, limit of results to 10
+  const { suggestionsData } = useSuggestions(debouncedValue, 10)
 
   const { searchData, isSearchError, isSearchLoading } = useSearch(searchValue)
 
@@ -31,6 +35,15 @@ const SearchPage = () => {
     if (event.key === 'Enter') {
       setSearchValue(inputValue)
       inputRef?.current?.blur()
+
+      // if no previous search history is available, create one in local storage
+      if (!searchHistory?.length) {
+        setSearchHistory([inputValue])
+        return localStorage.setItem('search-history', JSON.stringify([inputValue]))
+      }
+      const historyItems: string[] = [...searchHistory, inputValue]
+      setSearchHistory(historyItems)
+      return localStorage.setItem('search-history', JSON.stringify(historyItems))
     }
   }
 
@@ -47,18 +60,17 @@ const SearchPage = () => {
         }
         return -1
       }),
+    // sorting suggestions to display the previously searched as the first ones
     [suggestionsData, searchHistory],
   )
 
   const onSuggestionRemove = (e: React.MouseEvent<HTMLParagraphElement>, result: string) => {
     e.stopPropagation()
     e.preventDefault()
-    const history = localStorage.getItem('search-history')
 
     // history has to be defined as onSuggestionRemove wouldn't be accessible
 
-    const historyItems: string[] | null = JSON.parse(history!)
-    const filteredItems = historyItems?.filter((item) => item !== result) || []
+    const filteredItems = [...searchHistory]?.filter((item) => item !== result) || []
     setSearchHistory(filteredItems)
     return localStorage.setItem('search-history', JSON.stringify(filteredItems))
   }
@@ -68,14 +80,12 @@ const SearchPage = () => {
     inputRef.current?.blur()
     setSearchValue(result)
 
-    // saving search in localStorage
-    const history = localStorage.getItem('search-history')
-    if (!history) {
+    // if no previous search history is available, create one in local storage
+    if (!searchHistory?.length) {
       setSearchHistory([result])
       return localStorage.setItem('search-history', JSON.stringify([result]))
     }
-    const historyItems: string[] = JSON.parse(history)
-    historyItems.push(result)
+    const historyItems: string[] = [...searchHistory, result]
     setSearchHistory(historyItems)
     return localStorage.setItem('search-history', JSON.stringify(historyItems))
   }
@@ -99,21 +109,17 @@ const SearchPage = () => {
             suggestions={suggestionsToRender}
             onSuggestionClick={(result) => onSuggestionClick(result)}
             onSuggestionRemove={(e, result) => onSuggestionRemove(e, result)}
-            isSuggestionsError={isSuggestionsError}
-            isSuggestionsLoading={isSuggestionsLoading}
             searchHistory={searchHistory}
           />
         )}
       </InputWrapper>
-      {searchData && (
-        <Results
-          resultsAmount={searchData.results.length}
-          timeTaken={searchData.timeTaken.toFixed(2)}
-          results={searchData.results}
-          isError={isSearchError}
-          isLoading={isSearchLoading}
-        />
-      )}
+      <Results
+        resultsAmount={searchData?.results.length}
+        timeTaken={searchData?.timeTaken.toFixed(2)}
+        results={searchData?.results}
+        isError={isSearchError}
+        isLoading={isSearchLoading}
+      />
     </SearchWrapper>
   )
 }

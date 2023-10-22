@@ -1,7 +1,10 @@
 import { SuggestionsResponse, SearchResponse } from '../types'
 
-export const getSuggestions = async (text: string): Promise<SuggestionsResponse> => {
-  const url = `api/suggestions?text=${text}`
+export const getSuggestions = async (
+  text: string,
+  limit?: number,
+): Promise<SuggestionsResponse> => {
+  const url = `api/suggestions?text=${text}&limit=${limit || 10}`
 
   return await fetch(url).then(async (response) => {
     if (response.status !== 200) {

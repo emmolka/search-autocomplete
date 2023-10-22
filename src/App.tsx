@@ -2,7 +2,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react'
 import SearchPage from './pages/Search'
-import theme from './mocks/theme'
+import theme from './utils/theme'
 
 const GlobalStyles = createGlobalStyle`
  * {

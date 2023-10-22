@@ -9,19 +9,21 @@ import {
 import { ResultsType } from '../../types'
 
 interface ResultsProps {
-  resultsAmount: number
-  timeTaken: string
-  results: ResultsType[]
+  resultsAmount?: number
+  timeTaken?: string
+  results?: ResultsType[]
   isError?: boolean
   isLoading?: boolean
 }
 
 const Results = ({ results, resultsAmount, timeTaken, isError, isLoading }: ResultsProps) => (
-  <ResultsWrapper>
-    <RequestInformation>
-      Results amount: {resultsAmount}, took: {timeTaken}ms
-    </RequestInformation>
-    {results.map((result) => (
+  <ResultsWrapper hideborder={Number(!resultsAmount)}>
+    {Boolean(resultsAmount && timeTaken) && (
+      <RequestInformation>
+        Results amount: {resultsAmount}, took: {timeTaken}ms
+      </RequestInformation>
+    )}
+    {results?.map((result) => (
       <ResultWrapper key={`results-${result.id}`}>
         <StyledLink target='_blank' href={result.href}>
           <Title>{result.title}</Title>
@@ -29,7 +31,7 @@ const Results = ({ results, resultsAmount, timeTaken, isError, isLoading }: Resu
         <Description>{result.description}</Description>
       </ResultWrapper>
     ))}
-    {results.length === 0 && (
+    {results?.length === 0 && (
       <ResultWrapper>
         <Description>No results, please try again</Description>
       </ResultWrapper>
