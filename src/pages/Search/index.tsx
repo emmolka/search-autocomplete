@@ -100,7 +100,7 @@ const SearchPage = () => {
     return localStorage.setItem('search-history', JSON.stringify(historyItems))
   }
 
-  const onClearInput = (e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>) => {
+  const onClearInput = () => {
     // prevent losing input focus
     inputRef?.current?.focus()
     setInputValue('')
