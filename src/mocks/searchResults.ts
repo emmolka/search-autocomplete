@@ -47,6 +47,32 @@ const searchResults = [
     description:
       'Small library for decoding json web tokens (JWT). Latest version: 1.2.0, last published: 4 months ago. Start using react-jwt in your project',
   },
+  {
+    id: 'c1586fb3-d0c2-4e75-9dfd-11002a1a4a35',
+    title: 'react native',
+    href: 'https://reactnative.dev/',
+    description:
+      'React Native lets you create truly native apps and doesnt compromise your users experiences. It provides a core set of platform agnostic native components',
+  },
+  {
+    title: 'react router',
+    id: '42e96572-abb7-43c5-be7a-2b95c0801cd1',
+    href: 'https://reactrouter.com/en/main',
+    description: 'Start with the tutorial.',
+  },
+  {
+    id: 'a22a0f0a-6bb4-4ae4-bf53-98e10a5d9aea',
+    title: 'react install',
+    href: 'https://react.dev/learn/installation',
+    description:
+      'How to install React Developer Tools. Try React. You don\'t need to install anything to play with React. Try editing this sandbox! App.js. App.js. Download Reset',
+  },
+  {
+    id: '7f1a858d-f377-44ce-bc83-af23c8b969e5',
+    title: 'react icons',
+    href: 'https://react-icons.github.io/react-icons/',
+    description: 'Include popular icons in your React projects easily with react-icons',
+  },
 ]
 
 export default searchResults

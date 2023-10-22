@@ -111,6 +111,7 @@ const SearchPage = () => {
       <InputWrapper>
         <StyledInput
           autoFocus
+          // To focus on initial load
           value={inputValue}
           onChange={onInputChange}
           onFocus={() => setIsInputFocused(true)}

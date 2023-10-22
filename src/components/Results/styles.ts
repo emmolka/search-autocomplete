@@ -7,7 +7,7 @@ export const ResultsWrapper = styled.div<{ hideborder?: number }>`
   margin-top: 15px;
   width: 100%;
   max-width: 584px;
-  max-height: 500px;
+  max-height: 700px;
   overflow-y: auto;
 `
 
