@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { ReactComponent as SearchIcon } from '../../icons/search-icon.svg'
+import { ReactComponent as CancelIcon } from '../../icons/cancel-icon.svg'
 
 export const SearchWrapper = styled.div`
   display: flex;
@@ -51,4 +52,13 @@ export const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.lightGrey};
   width: 20px;
   height: 20px;
+`
+export const StyledCancelIcon = styled(CancelIcon)`
+  position: absolute;
+  top: 29px;
+  right: 12px;
+  color: ${({ theme }) => theme.lightGrey};
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `

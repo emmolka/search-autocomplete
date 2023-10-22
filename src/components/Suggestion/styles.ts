@@ -35,6 +35,7 @@ export const DeleteText = styled.p`
 export const SuggestionText = styled.p<{ hasbeensearched?: number }>`
   padding: 6px 0;
   color: ${({ hasbeensearched, theme }) => (hasbeensearched ? theme.purple : 'inherit')};
+  cursor: pointer;
 `
 export const TextIconWrapper = styled.div`
   display: flex;

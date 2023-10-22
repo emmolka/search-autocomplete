@@ -54,7 +54,7 @@ export const handlers = [
     }
 
     const foundResults = [...searchResults].filter((result) =>
-      result.title.toLowerCase().startsWith(text.toLowerCase()),
+      result.title.toLowerCase().includes(text.toLowerCase()),
     )
 
     const timeTaken = performance.now() - start

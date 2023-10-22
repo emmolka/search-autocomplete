@@ -30,3 +30,5 @@ msw library is used for mocking api responses
 /src/mocks/handlers
 
 endpoint uses JS method startsWith (Can be easily changed to includes - feel free to play around :) )
+
+Some styled-components receive numbers instead of booleans to prevent browser warnings

@@ -2,7 +2,13 @@ import useSuggestions from '../../hooks/useSuggestions'
 import { useDebounce } from '../../hooks/useDebounce'
 import useSearch from '../../hooks/useSearch'
 import { useState, useMemo, useRef } from 'react'
-import { InputWrapper, StyledInput, StyledSearchIcon, SearchWrapper } from './styles'
+import {
+  InputWrapper,
+  StyledInput,
+  StyledSearchIcon,
+  SearchWrapper,
+  StyledCancelIcon,
+} from './styles'
 import Results from '../../components/Results'
 import Suggestions from '../../components/Suggestions'
 
@@ -65,8 +71,9 @@ const SearchPage = () => {
   )
 
   const onSuggestionRemove = (e: React.MouseEvent<HTMLParagraphElement>, result: string) => {
-    e.stopPropagation()
+    // prevent losing input focus
     e.preventDefault()
+    e.stopPropagation()
 
     // history has to be defined as onSuggestionRemove wouldn't be accessible
 
@@ -76,8 +83,11 @@ const SearchPage = () => {
   }
 
   const onSuggestionClick = (result: string) => {
+    // set input value
     setInputValue(result)
+    // remove focus from input
     inputRef.current?.blur()
+    // set value to search results
     setSearchValue(result)
 
     // if no previous search history is available, create one in local storage
@@ -88,6 +98,12 @@ const SearchPage = () => {
     const historyItems: string[] = [...searchHistory, result]
     setSearchHistory(historyItems)
     return localStorage.setItem('search-history', JSON.stringify(historyItems))
+  }
+
+  const onClearInput = (e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>) => {
+    // prevent losing input focus
+    inputRef?.current?.focus()
+    setInputValue('')
   }
 
   return (
@@ -112,6 +128,7 @@ const SearchPage = () => {
             searchHistory={searchHistory}
           />
         )}
+        {inputValue && <StyledCancelIcon onClick={onClearInput} />}
       </InputWrapper>
       <Results
         resultsAmount={searchData?.results.length}
